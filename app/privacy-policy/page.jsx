@@ -11,7 +11,10 @@ export default function PrivacyPolicyPage() {
       <header className="border-b border-[var(--border)] bg-[var(--bg-card)] px-6 py-4">
         <div className="max-w-[900px] mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 no-underline text-[var(--text)] font-bold text-xl">
-            <span className="logo-icon text-[1.1rem]">C</span>
+            <div className="w-9 h-9 grid grid-cols-2 grid-rows-2 gap-0.5 flex-shrink-0 rounded-sm overflow-hidden">
+              <div className="bg-[var(--accent)]" /><div className="bg-[var(--accent)]" />
+              <div className="bg-[var(--accent)]" /><div className="bg-[var(--accent)]" />
+            </div>
             CRM Basegrid
           </Link>
           <Link href="/" className="text-[var(--text-muted)] text-sm hover:text-[var(--accent)] transition-colors">

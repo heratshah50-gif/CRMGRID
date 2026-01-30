@@ -4,8 +4,8 @@ export default function Home() {
   return (
     <>
       <header className="flex items-center justify-between px-6 md:px-12 py-5 max-w-[1400px] mx-auto bg-[var(--bg)] border-b border-[var(--border)]">
-        <Link href="#" className="flex items-center gap-2 no-underline text-[var(--text)] font-bold text-[1.35rem]">
-          <span className="logo-icon text-[1.1rem]">C</span>
+        <Link href="/" className="flex items-center gap-2 no-underline text-[var(--text)] font-bold text-[1.35rem]">
+          <LogoGridIcon className="w-9 h-9" />
           CRM Basegrid
         </Link>
         <nav className="nav-links hidden md:flex items-center gap-8">
@@ -69,74 +69,106 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Main dashboard mockup (light) */}
-            <div className="showcase-light max-w-[640px] w-full mx-auto lg:ml-auto">
-              <div className="flex items-center justify-between px-5 py-4 bg-[var(--bg-hero-card)] border-b border-[var(--border)]">
+            {/* SaaS-style dashboard mockup (Contacts view) - top of landing */}
+            <div className="showcase-light max-w-[680px] w-full mx-auto lg:ml-auto overflow-hidden rounded-2xl border-2 border-[var(--border)] shadow-[var(--shadow-lg)]">
+              <div className="flex items-center justify-between px-4 py-3 bg-[var(--bg-card)] border-b border-[var(--border)]">
                 <div className="flex items-center gap-2 font-bold text-base text-[var(--text)]">
-                  <span className="logo-icon w-7 h-7 text-[0.9rem]">C</span>
+                  <LogoGridIcon className="w-7 h-7" />
                   CRM Basegrid
                 </div>
-                <div className="flex items-center gap-2 py-2 px-3 bg-white rounded-lg border border-[var(--border)] text-[var(--text-muted)] text-[0.85rem]">
-                  <SearchIcon className="w-4 h-4 opacity-70" />
-                  Search
+                <div className="text-right">
+                  <p className="text-[var(--text)] font-semibold text-xs">Admin</p>
+                  <p className="text-[var(--text-muted)] text-[10px]">admin@example.com</p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-[160px_1fr] min-h-[380px]">
-                <aside className="showcase-sidebar p-4 pl-3 bg-[var(--bg-hero-card)] border-r border-[var(--border)] flex flex-wrap lg:flex-col gap-1 border-b lg:border-b-0 border-[var(--border)]">
+              <div className="grid grid-cols-1 lg:grid-cols-[56px_1fr] min-h-[420px]">
+                <aside className="showcase-sidebar flex flex-row lg:flex-col items-center lg:items-stretch justify-center gap-1 lg:gap-0 p-2 lg:py-4 bg-[var(--bg-hero-card)] border-b lg:border-b-0 lg:border-r border-[var(--border)]">
                   {[
-                    { label: "Home", active: true, icon: HomeIcon },
-                    { label: "Contacts", icon: PersonIcon },
-                    { label: "Calendar", icon: CalendarIcon },
-                    { label: "Add Contact", icon: AddIcon },
-                    { label: "Settings", icon: SettingsIcon },
-                    { label: "Help Center", icon: HelpIcon },
+                    { label: "Grid", icon: GridIcon, active: false },
+                    { label: "Home", icon: HomeIcon, active: false },
+                    { label: "Contacts", icon: PersonIcon, active: true },
+                    { label: "Calendar", icon: CalendarIcon, active: false },
+                    { label: "Add", icon: AddIcon, active: false },
+                    { label: "Settings", icon: SettingsIcon, active: false },
+                    { label: "Theme", icon: SunIcon, active: false },
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className={`nav-item flex items-center gap-2.5 py-2.5 px-3 rounded-lg text-[var(--text-muted)] text-[0.8rem] mb-0.5 ${item.active ? "active" : ""}`}
+                      className={`flex items-center justify-center lg:justify-center gap-0 py-2.5 px-2 lg:px-2 rounded-lg text-[0.7rem] ${item.active ? "bg-[var(--accent)] text-white" : "text-[var(--text-muted)]"}`}
+                      title={item.label}
                     >
-                      <item.icon className="w-[18px] h-[18px] shrink-0" />
-                      {item.label}
+                      <item.icon className="w-5 h-5 shrink-0" />
                     </div>
                   ))}
+                  <div className="hidden lg:flex mt-auto w-8 h-8 rounded-full bg-[var(--accent)] text-white text-xs font-bold items-center justify-center">AD</div>
                 </aside>
-                <div className="showcase-main p-5 bg-white">
-                  <h2 className="showcase-title text-[1.1rem] font-bold mb-4 text-[var(--text)]">Team Dashboard</h2>
-                  <div className="flex gap-4 mb-4">
-                    <select className="py-2 px-3 bg-[var(--bg)] border border-[var(--border)] rounded-lg text-[var(--text)] text-[0.8rem]">
-                      <option>All Members</option>
-                    </select>
-                    <select className="py-2 px-3 bg-[var(--bg)] border border-[var(--border)] rounded-lg text-[var(--text)] text-[0.8rem]">
-                      <option>All Projects</option>
-                    </select>
+                <div className="showcase-main p-4 bg-[var(--bg)] min-h-[320px]">
+                  {/* Summary cards */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+                    {[
+                      { label: "Total Contacts", value: "5", icon: PersonIcon, color: "text-[var(--accent)]" },
+                      { label: "Active Contacts", value: "5", icon: CheckCircleIcon, color: "text-emerald-500" },
+                      { label: "Total Tasks", value: "0", icon: CalendarIcon, color: "text-blue-500" },
+                      { label: "Pending Tasks", value: "0", icon: ExclamationIcon, color: "text-amber-500" },
+                    ].map((k) => (
+                      <div key={k.label} className="bg-white rounded-xl p-3 border border-[var(--border)] shadow-sm flex items-center gap-2">
+                        <k.icon className={`w-8 h-8 shrink-0 ${k.color}`} />
+                        <div className="min-w-0">
+                          <p className="text-[10px] text-[var(--text-muted)] truncate">{k.label}</p>
+                          <p className={`text-lg font-bold ${k.color}`}>{k.value}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-                    <div className="showcase-kpi bg-[var(--bg)] rounded-lg p-3 text-center border border-[var(--border)]">
-                      <div className="text-[0.7rem] text-[var(--text-muted)] mb-1">Total Leads</div>
-                      <div className="value blue text-[1.25rem] font-bold">5</div>
+                  {/* Search + filters */}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <div className="flex-1 min-w-[140px] flex gap-1">
+                      <input
+                        type="text"
+                        placeholder="Search contacts..."
+                        readOnly
+                        className="flex-1 px-3 py-2 rounded-lg border border-[var(--border)] bg-white text-[var(--text)] text-xs placeholder-[var(--text-muted)]"
+                      />
+                      <button type="button" className="p-2 rounded-lg bg-[var(--accent)] text-white" aria-label="Search">
+                        <SearchIcon className="w-4 h-4" />
+                      </button>
                     </div>
-                    <div className="showcase-kpi bg-[var(--bg)] rounded-lg p-3 text-center border border-[var(--border)]">
-                      <div className="text-[0.7rem] text-[var(--text-muted)] mb-1">Pending Follow-Ups</div>
-                      <div className="value orange text-[1.25rem] font-bold">0</div>
-                    </div>
-                    <div className="showcase-kpi bg-[var(--bg)] rounded-lg p-3 text-center border border-[var(--border)]">
-                      <div className="text-[0.7rem] text-[var(--text-muted)] mb-1">Overdue Follow-Ups</div>
-                      <div className="value red text-[1.25rem] font-bold">0</div>
-                    </div>
-                    <div className="showcase-kpi bg-[var(--bg)] rounded-lg p-3 text-center border border-[var(--border)]">
-                      <div className="text-[0.7rem] text-[var(--text-muted)] mb-1">Unanswered Emails</div>
-                      <div className="value purple text-[1.25rem] font-bold">0</div>
+                    <div className="flex flex-wrap gap-1">
+                      {["All Statuses", "Not Approached", "Approached", "Follow up Required", "Discussion", "Waiting", "Lost"].map((s, i) => (
+                        <span
+                          key={s}
+                          className={`px-2 py-1 rounded-md text-[10px] font-medium ${i === 0 ? "bg-[var(--accent)] text-white" : "bg-white border border-[var(--border)] text-[var(--text-muted)]"}`}
+                        >
+                          {s}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="showcase-chart bg-[var(--bg)] rounded-lg p-3 border border-[var(--border)] text-[0.75rem] text-[var(--text-muted)]">
-                      <div className="chart-title font-semibold text-[var(--text)] mb-2">Follow-Up Status</div>
-                      <div className="chart-placeholder" />
-                    </div>
-                    <div className="showcase-chart pie bg-[var(--bg)] rounded-lg p-3 border border-[var(--border)] text-[0.75rem] text-[var(--text-muted)]">
-                      <div className="chart-title font-semibold text-[var(--text)] mb-2">Team Communication Gaps</div>
-                      <div className="chart-placeholder" />
-                    </div>
+                  {/* Contact cards */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                    {[
+                      { name: "Acme Corp", status: "Approached" },
+                      { name: "TechStart Inc", status: "Discussion" },
+                      { name: "Global Solutions", status: "Follow up Required" },
+                      { name: "NextGen Ltd", status: "Approached" },
+                    ].map((c) => (
+                      <div key={c.name} className="bg-white rounded-xl p-3 border border-[var(--border)] shadow-sm">
+                        <div className="flex items-start justify-between gap-1 mb-2">
+                          <BuildingIcon className="w-8 h-8 text-[var(--accent)] shrink-0" />
+                          <div className="flex gap-1">
+                            <PencilIcon className="w-3.5 h-3.5 text-[var(--text-muted)]" />
+                            <TrashIcon className="w-3.5 h-3.5 text-[var(--text-muted)]" />
+                          </div>
+                        </div>
+                        <p className="text-[var(--text)] font-semibold text-xs truncate mb-1">{c.name}</p>
+                        <p className="text-[10px] text-[var(--text-muted)] mb-0.5">STATUS</p>
+                        <p className="text-[10px] font-medium text-[var(--accent)] mb-2">{c.status}</p>
+                        <p className="text-[10px] text-[var(--text-muted)] mb-0.5">TEAM ASSIGNED</p>
+                        <p className="text-[10px] font-medium text-[var(--accent)] flex items-center gap-1">
+                          <PersonIcon className="w-3 h-3" /> 0 members
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -163,54 +195,73 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Analytics & CRM dashboards section */}
+        {/* Analytics & CRM at a glance – single image with two charts */}
         <section className="bg-white py-16 px-6 md:px-12 border-y border-[var(--border)]">
           <div className="max-w-[1400px] mx-auto">
-            <h2 className="text-center text-2xl font-bold mb-4 text-[var(--text)]">Analytics & CRM at a glance</h2>
-            <p className="text-center text-[var(--text-muted)] text-sm max-w-xl mx-auto mb-12">
-              Real-time dashboards, pipeline views, and contact insights — all in one place.
+            <h2 className="text-center text-2xl font-bold mb-3 text-[var(--text)]">Analytics & CRM at a glance</h2>
+            <p className="text-center text-[var(--text-muted)] text-base max-w-2xl mx-auto mb-10">
+              See how your follow-ups and team communication stack up — key metrics in one view.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="crm-dashboard-card bg-[var(--bg)] rounded-[var(--radius-lg)] p-5 border border-[var(--border)] shadow-[var(--shadow)]">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[var(--text)] font-semibold text-sm">Revenue</span>
-                  <span className="text-[var(--accent)] text-xs font-medium">View As</span>
+            <div className="max-w-4xl mx-auto bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] shadow-[var(--shadow-lg)] p-6 md:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                {/* Follow-Up Status – bar chart */}
+                <div className="bg-white rounded-xl p-5 border border-[var(--border)] shadow-sm">
+                  <h3 className="text-[var(--text)] font-bold text-base mb-4">Follow-Up Status</h3>
+                  <div className="flex items-end gap-6 h-32">
+                    {[
+                      { label: "Due Today", value: 3, color: "bg-[var(--accent)]" },
+                      { label: "Overdue", value: 1, color: "bg-amber-500" },
+                      { label: "Completed", value: 5, color: "bg-emerald-500" },
+                    ].map((bar) => (
+                      <div key={bar.label} className="flex-1 flex flex-col items-center gap-2">
+                        <div className="w-full flex flex-col justify-end h-24" style={{ maxHeight: "6rem" }}>
+                          <div
+                            className={`w-full ${bar.color} rounded-t min-h-[4px] transition-all`}
+                            style={{ height: `${(bar.value / 5) * 100}%` }}
+                          />
+                        </div>
+                        <span className="text-[var(--text-muted)] text-xs font-medium">{bar.label}</span>
+                        <span className="text-[var(--text)] text-sm font-bold">{bar.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-2 text-[10px] text-[var(--text-muted)]">
+                    <span>0</span>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                  </div>
                 </div>
-                <p className="text-[var(--text-muted)] text-xs mb-3">Today Revenue</p>
-                <div className="flex items-end gap-1 h-16">
-                  {[50, 70, 45, 90, 60, 75, 85].map((h, i) => (
-                    <div key={i} className="flex-1 bg-[var(--accent)] rounded-t opacity-80" style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-                <p className="mt-2 text-[var(--accent)] font-bold text-sm">$290</p>
-              </div>
-              <div className="crm-dashboard-card bg-[var(--bg)] rounded-[var(--radius-lg)] p-5 border border-[var(--border)] shadow-[var(--shadow)]">
-                <div className="text-[var(--text)] font-semibold text-sm mb-4">Sales Pipeline</div>
-                <div className="flex gap-2 items-end h-20">
-                  <div className="flex-1 rounded-t bg-rose-400 h-[70%]" />
-                  <div className="flex-1 rounded-t bg-emerald-400 h-[85%]" />
-                  <div className="flex-1 rounded-t bg-sky-400 h-[60%]" />
-                  <div className="flex-1 rounded-t bg-amber-400 h-[45%]" />
-                  <div className="flex-1 rounded-t bg-teal-400 h-[55%]" />
-                </div>
-                <div className="flex gap-3 mt-2 text-[10px] text-[var(--text-muted)]">
-                  <span>Lead</span>
-                  <span>Qualified</span>
-                  <span>Proposal</span>
-                  <span>Negotiation</span>
-                  <span>Won</span>
-                </div>
-              </div>
-              <div className="crm-dashboard-card bg-[var(--bg)] rounded-[var(--radius-lg)] p-5 border border-[var(--border)] shadow-[var(--shadow)]">
-                <div className="text-[var(--text)] font-semibold text-sm mb-4">Contacts</div>
-                <div className="space-y-2">
-                  {["Sarah Chen", "Mike Johnson", "Emma Wilson"].map((name, i) => (
-                    <div key={name} className="flex items-center gap-2 py-1.5 px-2 rounded-lg bg-white border border-[var(--border)]">
-                      <div className="w-6 h-6 rounded-full bg-[var(--accent)] opacity-70" />
-                      <span className="text-[var(--text)] text-xs font-medium">{name}</span>
-                      {i === 0 && <span className="ml-auto text-[10px] text-[var(--accent)]">Active</span>}
+                {/* Team Communication Gaps – pie chart */}
+                <div className="bg-white rounded-xl p-5 border border-[var(--border)] shadow-sm">
+                  <h3 className="text-[var(--text)] font-bold text-base mb-4">Team Communication Gaps</h3>
+                  <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div
+                      className="w-32 h-32 rounded-full flex-shrink-0"
+                      style={{
+                        background: "conic-gradient(#14b8a6 0% 68%, #ef4444 68% 82%, #8b5cf6 82% 100%)",
+                      }}
+                    />
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-[var(--accent-light)]" />
+                        <span className="text-[var(--text-muted)] text-sm">Contacted</span>
+                        <span className="text-[var(--text)] font-bold text-sm">68%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-red-500" />
+                        <span className="text-[var(--text-muted)] text-sm">No Contact</span>
+                        <span className="text-[var(--text)] font-bold text-sm">14%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full bg-violet-500" />
+                        <span className="text-[var(--text-muted)] text-sm">No Recent Response</span>
+                        <span className="text-[var(--text)] font-bold text-sm">18%</span>
+                      </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -502,6 +553,17 @@ export default function Home() {
   );
 }
 
+function LogoGridIcon({ className }) {
+  return (
+    <div className={`grid grid-cols-2 grid-rows-2 gap-0.5 flex-shrink-0 rounded-sm overflow-hidden ${className || ""}`}>
+      <div className="bg-[var(--accent)]" />
+      <div className="bg-[var(--accent)]" />
+      <div className="bg-[var(--accent)]" />
+      <div className="bg-[var(--accent)]" />
+    </div>
+  );
+}
+
 function PlayIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -530,6 +592,54 @@ function StarIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
       <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </svg>
+  );
+}
+
+function GridIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M3 3v8h8V3H3zm6 6H5V5h4v4zm-6 4v8h8v-8H3zm6 6H5v-4h4v4zm4-16v8h8V3h-8zm6 6h-4V5h4v4zm-6 4v8h8v-8h-8zm6 6h-4v-4h4v4z" />
+    </svg>
+  );
+}
+
+function CheckCircleIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+    </svg>
+  );
+}
+
+function ExclamationIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+    </svg>
+  );
+}
+
+function SunIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z" />
+    </svg>
+  );
+}
+
+function PencilIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+    </svg>
+  );
+}
+
+function TrashIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
     </svg>
   );
 }
